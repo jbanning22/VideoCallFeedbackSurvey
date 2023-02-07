@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 
-function Button2() {
-    const [text, setText] = useState("Skip");
-
-    function handleClick() {
-        setText("Thanks for your feedback!");
-    }
-
+function Button2(props) {
+    const { submitRating } = props;
     return (
         <div style={{ marginTop: 80 }}>
             <button
@@ -21,6 +16,7 @@ function Button2() {
                     borderRadius: 30,
                     color: "white",
                 }}
+                onClick={submitRating}
             >
                 Submit
             </button>

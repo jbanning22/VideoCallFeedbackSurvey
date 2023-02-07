@@ -1,17 +1,39 @@
 import React, { useState } from "react";
 import Button from "./buttons/Button";
 import Button2 from "./buttons/Button2";
-import RoundButton1 from "./buttons/RoundButton1";
-import RoundButton2 from "./buttons/RoundButton2";
-import RoundButton3 from "./buttons/RoundButton3";
-import RoundButton4 from "./buttons/RoundButton4";
-import RoundButton5 from "./buttons/RoundButton5";
+import { rate } from "./ratingSlice";
+import { useSelector, useDispatch } from "react-redux";
+
+const Circle = ({ selected, onClick, value }) => (
+    <div
+        style={{
+            width: 80,
+            height: 80,
+            borderRadius: "50%",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: selected ? "#41E3E5" : "#DFDFE6",
+            display: "flex",
+            flexDirection: "row",
+            marginRight: 25,
+            cursor: "pointer",
+        }}
+        onClick={onClick}
+    >
+        <div style={{ fontSize: 25, fontWeight: 500 }}>{value}</div>
+    </div>
+);
 
 export default function Card() {
-    const [bgColor, setBgColor] = useState("#DFDFE6");
+    const { rating } = useSelector((state) => state.rating);
+    const dispatch = useDispatch();
 
-    function selectButton() {
-        setBgColor("#41E3E5");
+    function updateRating(rating) {
+        dispatch(rate(rating));
+    }
+
+    function submitRating() {
+        console.log("rating is: ", rating);
     }
 
     return (
@@ -65,12 +87,21 @@ export default function Card() {
                         marginTop: 30,
                     }}
                 >
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <RoundButton1 selected={selectButton} />
-                        <RoundButton2 selected={selectButton} />
-                        <RoundButton3 selected={selectButton} />
-                        <RoundButton4 selected={selectButton} />
-                        <RoundButton5 selected={selectButton} />
+                    <div
+                        style={{
+                            textAlign: "center",
+                            display: "flex",
+                            flexDirection: "row",
+                        }}
+                    >
+                        {[1, 2, 3, 4, 5].map((value) => (
+                            <Circle
+                                value={value}
+                                key={value}
+                                selected={value === rating}
+                                onClick={() => updateRating(value)}
+                            />
+                        ))}
                     </div>
                     <div
                         style={{
@@ -106,7 +137,7 @@ export default function Card() {
                     }}
                 >
                     <Button></Button>
-                    <Button2></Button2>
+                    <Button2 submitRating={submitRating}></Button2>
                 </div>
             </div>
         </div>

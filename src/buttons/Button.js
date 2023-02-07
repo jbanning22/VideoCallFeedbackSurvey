@@ -1,12 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
 function Button() {
-    const [text, setText] = useState("Skip");
-
-    function handleClick() {
-        setText("Thanks for your feedback!");
-    }
-
     return (
         <div
             style={{
